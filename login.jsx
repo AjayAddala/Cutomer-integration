@@ -13,6 +13,8 @@ import {
   import axios from "axios";
   import Joi from "joi-browser";
   import Alert from "@mui/material/Alert";
+  import { loginAction } from "../actions/login-action";
+  import { connect } from "react-redux";
   
   const ariaLabel = { "aria-label": "description" };
   
@@ -34,6 +36,7 @@ import {
       username: Joi.string().min(5)
         .required(),
       password: Joi.string().min(3).required(),
+      role: Joi.string().required(),
     };
   
     // Step2: Validate schema with user input
@@ -159,4 +162,17 @@ import {
     );
   };
  
-export default Login;
+  const mapStateToProps = (state) => {
+    return {
+      login: state.login.login,
+    };
+  };
+  
+  // function to dispatch actions
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      loginAction,
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps())(Login);
